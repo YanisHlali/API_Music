@@ -1,96 +1,123 @@
-const albumData = require("../data/album.json");
 const fs = require("fs");
 const path = require("path");
-const artistData = require("../data/artist.json");
-const genreData = require("../data/genre.json");
+const albumData = require("../data/album.json");
 
 // --------------------- CREATE ---------------------
 
-async function createAlbum(album) {
-     albumData.push(album);
-     fs.writeFileSync(
-          path.join(__dirname, "../data/album.json"),
-          JSON.stringify(albumData)
-     );
-     return album;
+async function createAlbum(req, res) {
+     // Create a new album
+     if (req.method === "POST") {
+          // Check if the HTTP method is POST
+          const id = req.body.id;
+          const name = req.body.name;
+          const date = req.body.date;
+          const artistId = req.body.artist_id;
+          const genreId = req.body.genre_id;
+
+          const idDefault = albumData.length + 1; // Generate a new ID
+          const newAlbum = {
+               id: id ? Number(id) : idDefault,
+               name,
+               date,
+               artist_id: artistId,
+               genre_id: genreId,
+          };
+          albumData.push(newAlbum); // Add the new album to the albumData array
+          updateAlbumDataFile(); // Write the updated album data to the JSON file
+          res.send(newAlbum); // Return the new album object
+     } else {
+          res.sendStatus(404); // Return a 404 status code
+     }
 }
 
 // --------------------- GET ---------------------
 
-async function getAllAlbum() {
-     return albumData;
+function getAllAlbum(req, res) {
+     // Return all albums
+     res.send(albumData);
 }
 
-async function getAlbumById(id) {
-     return albumData.find((album) => album.id === id);
+async function getAlbumById(req, res) {
+     // Return an album by ID
+     const id = req.params.id;
+     const album = albumData.find((album) => album.id === Number(id)); // Find the album with the matching ID
+     res.send(album);
 }
 
-async function getAlbumByName(name) {
-     return albumData.find((album) => album.name === name);
+async function getAlbumByName(req, res) {
+     // Return an album by name
+     const name = req.params.name;
+     const album = albumData.find((album) => album.name === name); // Find the album with the matching name
+     res.send(album);
 }
 
-async function getAlbumByDate(date) {
-     return albumData.find((album) => album.date === date);
+async function getAlbumByDate(req, res) {
+     // Return an album by date
+     const date = req.params.date;
+     const album = albumData.find((album) => album.date === date); // Find the album with the matching date
+     res.send(album);
 }
 
-async function getAlbumByArtistId(artistId) {
-     const artist = artistData.find((artist) => artist.id === artistId);
-     return albumData.filter((album) => album.artist === artist.name);
+async function getAlbumByArtistId(req, res) {
+     // Return all albums by artist ID
+     const artistId = req.params.artistId;
+     const album = albumData.filter(
+          (album) => album.artist_id === Number(artistId)
+     ); // Filter the albums by the matching artist ID
+     res.send(album);
 }
 
-async function getAlbumByGenreId(genreId) {
-     const genre = genreData.find((genre) => genre.id === genreId);
-     return albumData.filter((album) => album.genre === genre.name);
+async function getAlbumByGenreId(req, res) {
+     // Return all albums by genre ID
+     const genreId = req.params.genreId;
+     const album = albumData.filter(
+          (album) => album.genre_id === Number(genreId)
+     ); // Filter the albums by the matching genre ID
+     res.send(album);
 }
 
 // --------------------- UPDATE ---------------------
 
-async function updateAlbum(id, album) {
-     const index = albumData.findIndex((album) => album.id === id);
-     albumData[index] = album;
+async function updateAlbum(req, res) {
+     // Update an album by ID
+     if (req.method === "POST") {
+          // Check if the HTTP method is POST
+          const id = req.body.id;
+          const name = req.body.name;
+          const date = req.body.date;
+          const artistId = req.body.artist_id;
+          const genreId = req.body.genre_id;
 
-     fs.writeFileSync(
-          path.join(__dirname, "../data/album.json"),
-          JSON.stringify(albumData)
-     );
+          const index = albumData.findIndex((album) => album.id === Number(id)); // Find the index of the album with the matching ID
+          albumData[index].name = name;
+          albumData[index].date = date;
+          albumData[index].artist_id = artistId;
+          albumData[index].genre_id = genreId;
 
-     return album;
-}
-
-async function updateAlbumName(id, name) {
-     const index = albumData.findIndex((album) => album.id === id);
-     albumData[index].name = name;
-
-     fs.writeFileSync(
-          path.join(__dirname, "../data/album.json"),
-          JSON.stringify(albumData)
-     );
-
-     return albumData[index];
-}
-
-async function updateAlbumDate(id, date) {
-     const index = albumData.findIndex((album) => album.id === id);
-     albumData[index].date = date;
-
-     fs.writeFileSync(
-          path.join(__dirname, "../data/album.json"),
-          JSON.stringify(albumData)
-     );
-
-     return albumData[index];
+          updateAlbumDataFile(); // Write the updated album data to the JSON file
+          res.send(albumData[index]); // Return the updated album object
+     } else {
+          res.sendStatus(404); // Return a 404 status code
+     }
 }
 
 // --------------------- DELETE ---------------------
 
-async function deleteAlbum(id) {
-     const index = albumData.findIndex((album) => album.id === id);
-     albumData.splice(index, 1);
+async function deleteAlbum(req, res) {
+     // Delete an album by ID
+     const id = req.params.id;
+     const index = albumData.findIndex((album) => album.id === Number(id)); // Find the index of the album with the matching ID
+     albumData.splice(index, 1); // Remove the album from the albumData array
+     updateAlbumDataFile(); // Write the updated album data to the JSON file
+     res.send("Album deleted"); // Return a success message
+}
+
+function updateAlbumDataFile() {
+     // Write the albumData array to the JSON file
      fs.writeFileSync(
           path.join(__dirname, "../data/album.json"),
           JSON.stringify(albumData)
      );
-     return albumData;
 }
 
 module.exports = {
@@ -102,7 +129,5 @@ module.exports = {
      getAlbumByArtistId,
      getAlbumByGenreId,
      updateAlbum,
-     updateAlbumName,
-     updateAlbumDate,
      deleteAlbum,
 };

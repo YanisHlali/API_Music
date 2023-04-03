@@ -1,52 +1,72 @@
 [
-    {
-      "id": 1,
-      "name": "The Beatles (White Album)",
-      "date": "1968-11-22"
-    },
-    {
-      "id": 2,
-      "name": "Abbey Road",
-      "date": "1969-09-26"
-    },
-    {
-      "id": 3,
-      "name": "Revolver",
-      "date": "1966-08-05"
-    },
-    {
-      "id": 4,
-      "name": "Rubber Soul",
-      "date": "1965-12-03"
-    },
-    {
-      "id": 5,
-      "name": "Sgt. Pepper's Lonely Hearts Club Band",
-      "date": "1967-06-01"
-    },
-    {
-      "id": 6,
-      "name": "Help!",
-      "date": "1965-08-06"
-    },
-    {
-      "id": 7,
-      "name": "Beatles for Sale",
-      "date": "1964-12-04"
-    },
-    {
-      "id": 8,
-      "name": "Please Please Me",
-      "date": "1963-03-22"
-    },
-    {
-      "id": 9,
-      "name": "With The Beatles",
-      "date": "1963-11-22"
-    },
-    {
-      "id": 10,
-      "name": "A Hard Day's Night",
-      "date": "1964-07-10"
-    }
-  ]
+     {
+          "id": 1,
+          "name": "The Beatles (White Album)",
+          "date": "1968-11-22",
+          "artist_id": 8,
+          "genre_id": 1
+     },
+     {
+          "id": 5,
+          "name": "Sgt. Pepper's Lonely Hearts Club Band",
+          "date": "1967-06-01",
+          "artist_id": 1,
+          "genre_id": 5
+     },
+     {
+          "id": 6,
+          "name": "Help!",
+          "date": "1965-08-06",
+          "artist_id": 2,
+          "genre_id": 6
+     },
+     {
+          "id": 7,
+          "name": "Beatles for Sale",
+          "date": "1964-12-04",
+          "artist_id": 3,
+          "genre_id": 7
+     },
+     {
+          "id": 8,
+          "name": "Please Please Me",
+          "date": "1963-03-22",
+          "artist_id": 5,
+          "genre_id": 8
+     },
+     {
+          "id": 9,
+          "name": "With The Beatles",
+          "date": "1963-11-22",
+          "artist_id": 6,
+          "genre_id": 2
+     },
+     {
+          "id": 10,
+          "name": "A Hard Day's Night",
+          "date": "1964-07-10",
+          "artist_id": 9,
+          "genre_id": 10
+     },
+     {
+          "id": 8,
+          "name": "Abbbbbbbbbey",
+          "date": "1969-09-26",
+          "artist_id": "4",
+          "genre_id": "4"
+     },
+     {
+          "id": 9,
+          "name": "TESTsssssssssssssssssssssssssssss",
+          "date": "1969-09-26",
+          "artist_id": "4",
+          "genre_id": "4"
+     },
+     {
+          "id": 20,
+          "name": "TESTsssssssssssssssssssssssssssss",
+          "date": "1969-09-26",
+          "artist_id": "4",
+          "genre_id": "4"
+     }
+]
