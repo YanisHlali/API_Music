@@ -1,0 +1,46 @@
+[
+	{
+		"id": 0,
+		"name": "Rap"
+	},
+	{
+		"id": 1,
+		"name": "Rock"
+	},
+	{
+		"id": 2,
+		"name": "Pop"
+	},
+	{
+		"id": 3,
+		"name": "Jazz"
+	},
+	{
+		"id": 4,
+		"name": "Blues"
+	},
+	{
+		"id": 5,
+		"name": "Country"
+	},
+	{
+		"id": 6,
+		"name": "Metal"
+	},
+	{
+		"id": 7,
+		"name": "Classical"
+	},
+	{
+		"id": 8,
+		"name": "Folk"
+	},
+	{
+		"id": 9,
+		"name": "Reggae"
+	},
+	{
+		"id": 10,
+		"name": "Soul"
+	}
+]
