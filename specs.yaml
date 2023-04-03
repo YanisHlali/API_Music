@@ -2,12 +2,9 @@ openapi: 3.0.2
 servers:
   - url: http://localhost:3000
 info:
-  title: "Sample IUT2 Web API"
+  title: "API Web Musique"
   version: 1.0.0
-  description: This is a Web API for IUT2.
-  contact:
-    email: login@univ-grenoble-alpes.fr
-    name: <Prénom Nom>
+  description: This is a Web API to get informations from a fictionnal audio streaming plateform.
 paths:
     /genre:
       get:
@@ -23,6 +20,38 @@ paths:
         responses:
           200:
             description: "Successful operation"
+    /genre/{id}:
+      get:
+        tags: [genre]
+        summary: "Get a specific genre by id"
+        parameters:
+          - name: id
+            schema:
+              type: integer
+            in: path
+            description: Genre id
+            required: true
+        responses:
+          200:
+            description: Successful operation
+          400:
+            description: Genre not found
+    /genre/{name}:
+      get:
+        tags: [genre]
+        summary: "Get a specific genre by name"
+        parameters:
+          - name: name
+            schema:
+              type: string
+            in: path
+            description: Genre name
+            required: true
+        responses:
+          200:
+            description: Successful operation
+          400:
+            description: Genre not found
     /artist:
       get:
         tags: [artist]
@@ -65,4 +94,19 @@ paths:
         responses:
           200:
             description: "Successful operation"
-  
+    /tracks/{id}:
+      get:
+        tags: [track]
+        summary: "Get a specific track by id"
+        parameters:
+          - name: id
+            schema:
+              type: integer
+            in: path
+            description: Track id
+            required: true
+        responses:
+          200:
+            description: Successful operation
+          400:
+            description: Track not found
