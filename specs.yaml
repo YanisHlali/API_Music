@@ -1,0 +1,68 @@
+openapi: 3.0.2
+servers:
+  - url: http://localhost:3000
+info:
+  title: "Sample IUT2 Web API"
+  version: 1.0.0
+  description: This is a Web API for IUT2.
+  contact:
+    email: login@univ-grenoble-alpes.fr
+    name: <Prénom Nom>
+paths:
+    /genre:
+      get:
+        tags: [genre]
+        summary: "List all genres"
+        parameters:
+          - name: page
+            schema:
+              type: integer
+            in: query
+            description: page of results to return
+            required: false
+        responses:
+          200:
+            description: "Successful operation"
+    /artist:
+      get:
+        tags: [artist]
+        summary: "List all artists"
+        parameters:
+          - name: page
+            schema:
+              type: integer
+            in: query
+            description: page of results to return
+            required: false
+        responses:
+          200:
+            description: "Successful operation"
+    /album:
+      get:
+        tags: [album]
+        summary: "List all albums"
+        parameters:
+          - name: page
+            schema:
+              type: integer
+            in: query
+            description: page of results to return
+            required: false
+        responses:
+          200:
+            description: "Successful operation"
+    /track:
+      get:
+        tags: [track]
+        summary: "List all tracks"
+        parameters:
+          - name: page
+            schema:
+              type: integer
+            in: query
+            description: page of results to return
+            required: false
+        responses:
+          200:
+            description: "Successful operation"
+  
