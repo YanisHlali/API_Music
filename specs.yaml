@@ -1,0 +1,112 @@
+openapi: 3.0.2
+servers:
+  - url: http://localhost:3000
+info:
+  title: "API Web Musique"
+  version: 1.0.0
+  description: This is a Web API to get informations from a fictionnal audio streaming plateform.
+paths:
+    /genre:
+      get:
+        tags: [genre]
+        summary: "List all genres"
+        parameters:
+          - name: page
+            schema:
+              type: integer
+            in: query
+            description: page of results to return
+            required: false
+        responses:
+          200:
+            description: "Successful operation"
+    /genre/{id}:
+      get:
+        tags: [genre]
+        summary: "Get a specific genre by id"
+        parameters:
+          - name: id
+            schema:
+              type: integer
+            in: path
+            description: Genre id
+            required: true
+        responses:
+          200:
+            description: Successful operation
+          400:
+            description: Genre not found
+    /genre/{name}:
+      get:
+        tags: [genre]
+        summary: "Get a specific genre by name"
+        parameters:
+          - name: name
+            schema:
+              type: string
+            in: path
+            description: Genre name
+            required: true
+        responses:
+          200:
+            description: Successful operation
+          400:
+            description: Genre not found
+    /artist:
+      get:
+        tags: [artist]
+        summary: "List all artists"
+        parameters:
+          - name: page
+            schema:
+              type: integer
+            in: query
+            description: page of results to return
+            required: false
+        responses:
+          200:
+            description: "Successful operation"
+    /album:
+      get:
+        tags: [album]
+        summary: "List all albums"
+        parameters:
+          - name: page
+            schema:
+              type: integer
+            in: query
+            description: page of results to return
+            required: false
+        responses:
+          200:
+            description: "Successful operation"
+    /track:
+      get:
+        tags: [track]
+        summary: "List all tracks"
+        parameters:
+          - name: page
+            schema:
+              type: integer
+            in: query
+            description: page of results to return
+            required: false
+        responses:
+          200:
+            description: "Successful operation"
+    /tracks/{id}:
+      get:
+        tags: [track]
+        summary: "Get a specific track by id"
+        parameters:
+          - name: id
+            schema:
+              type: integer
+            in: path
+            description: Track id
+            required: true
+        responses:
+          200:
+            description: Successful operation
+          400:
+            description: Track not found
