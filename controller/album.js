@@ -32,7 +32,7 @@ async function createAlbum(req, res) {
 
 // --------------------- GET ---------------------
 
-function getAllAlbum(req, res) {
+async function getAllAlbum(req, res) {
      // Return all albums
      res.send(albumData);
 }
