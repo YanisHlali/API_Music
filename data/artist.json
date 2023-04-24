@@ -6,12 +6,6 @@
     "nationality": "Lithuania"
   },
   {
-    "id": 1,
-    "name": "Albertine",
-    "popularity": 60,
-    "nationality": "Cyprus"
-  },
-  {
     "id": 2,
     "name": "Ummersen",
     "popularity": 37,
@@ -46,12 +40,6 @@
     "name": "Lail",
     "popularity": 31,
     "nationality": "Haiti"
-  },
-  {
-    "id": 8,
-    "name": "Teryn",
-    "popularity": 33,
-    "nationality": "Holy See (Vatican City State)"
   },
   {
     "id": 9,
@@ -100,17 +88,5 @@
     "name": "Yate",
     "popularity": 18,
     "nationality": "Puerto Rico"
-  },
-  {
-    "id": 18,
-    "name": "Tremayne",
-    "popularity": 50,
-    "nationality": "Togo"
-  },
-  {
-    "id": 19,
-    "name": "Palocz",
-    "popularity": 5,
-    "nationality": "Mayotte"
   }
 ]
