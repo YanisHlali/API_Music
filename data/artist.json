@@ -60,12 +60,6 @@
     "nationality": "Tajikistan"
   },
   {
-    "id": 10,
-    "name": "Destinee",
-    "popularity": 38,
-    "nationality": "Venezuela"
-  },
-  {
     "id": 11,
     "name": "Daveta",
     "popularity": 55,
@@ -118,21 +112,5 @@
     "name": "Palocz",
     "popularity": 5,
     "nationality": "Mayotte"
-  },
-  {
-    "id": 20,
-    "name": "TESTsssssssssssssssssssssssssssss"
-  },
-  {
-    "id": 20,
-    "name": "TESTsssssssssssssssssssssssssssss",
-    "popularity": "4",
-    "nationality": "French"
-  },
-  {
-    "id": 20,
-    "name": "TESTsssssssssssssssssssssssssssss",
-    "popularity": "4",
-    "nationality": "French"
   }
 ]
