@@ -13,6 +13,7 @@ async function createTrack(req, res) {
     const popularity = req.body.popularity;
     const date = req.body.date;
     const time = req.body.time;
+    const albumId = req.body.album_id;
 
     const idDefault = trackData.length + 1; // Generate a new ID
     const newTrack = {
@@ -21,6 +22,7 @@ async function createTrack(req, res) {
       popularity,
       date,
       time,
+      album_id: albumId,
     };
     trackData.push(newTrack); // Add the new track to the trackData array
     updateTrackDataFile(); // Write the updated track data to the JSON file
@@ -85,6 +87,7 @@ async function updateTrack(req, res) {
     const popularity = req.body.popularity ? req.body.popularity : null;
     const date = req.body.date ? req.body.date : null;
     const time = req.body.time ? req.body.time : null;
+    const albumId = req.body.album_id ? req.body.album_id : null;
 
     console.log(id);
 
@@ -95,6 +98,7 @@ async function updateTrack(req, res) {
       track.popularity = popularity ? popularity : track.popularity; // Update the popularity
       track.date = date ? date : track.date; // Update the date
       track.time = time ? time : track.time; // Update the time
+      track.album_id = albumId ? albumId : track.album_id; // Update the album ID
       updateTrackDataFile(); // Write the updated track data to the JSON file
       res.send(track); // Return the updated track object
     } else {

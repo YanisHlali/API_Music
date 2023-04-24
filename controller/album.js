@@ -13,6 +13,7 @@ async function createAlbum(req, res) {
           const date = req.body.date;
           const artistId = req.body.artist_id;
           const genreId = req.body.genre_id;
+          const trackIds = req.body.track_ids;
 
           const idDefault = albumData.length + 1; // Generate a new ID
           const newAlbum = {
@@ -21,6 +22,7 @@ async function createAlbum(req, res) {
                date,
                artist_id: artistId,
                genre_id: genreId,
+               track_ids: trackIds,
           };
           albumData.push(newAlbum); // Add the new album to the albumData array
           updateAlbumDataFile(); // Write the updated album data to the JSON file
@@ -88,12 +90,14 @@ async function updateAlbum(req, res) {
           const date = req.body.date;
           const artistId = req.body.artist_id;
           const genreId = req.body.genre_id;
+          const trackIds = req.body.track_ids;
 
           const index = albumData.findIndex((album) => album.id === Number(id)); // Find the index of the album with the matching ID
           albumData[index].name = name;
           albumData[index].date = date;
           albumData[index].artist_id = artistId;
           albumData[index].genre_id = genreId;
+          albumData[index].track_ids = trackIds;
 
           updateAlbumDataFile(); // Write the updated album data to the JSON file
           res.send(albumData[index]); // Return the updated album object
