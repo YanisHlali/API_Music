@@ -4,69 +4,71 @@
     "name": "Hello",
     "popularity": 80,
     "date": "2023-03-31",
-    "time": 252
+    "time": 252,
+    "album_id": null
   },
   {
     "id": 2,
     "name": "Goodbye",
     "popularity": 65,
     "date": "2023-03-31",
-    "time": 396
+    "time": 396,
+    "album_id": null
   },
   {
     "id": 3,
     "name": "In My Life",
     "popularity": 92,
     "date": "2023-04-01",
-    "time": 238
+    "time": 238,
+    "album_id": null
   },
   {
     "id": 4,
     "name": "Let It Be",
     "popularity": 87,
     "date": "2023-04-02",
-    "time": 442
+    "time": 442,
+    "album_id": null
   },
   {
     "id": 5,
     "name": "Imagine",
     "popularity": 95,
     "date": "2023-04-02",
-    "time": 582
+    "time": 582,
+    "album_id": null
   },
   {
     "id": 6,
     "name": "Yesterday",
     "popularity": 78,
     "date": "2023-04-03",
-    "time": 136
+    "time": 136,
+    "album_id": null
   },
   {
     "id": 7,
     "name": "Hey Jude",
     "popularity": 90,
     "date": "2023-04-03",
-    "time": 288
+    "time": 288,
+    "album_id": null
   },
   {
     "id": 8,
     "name": "A Hard Day's Night",
     "popularity": 82,
     "date": "2023-04-04",
-    "time": 388
+    "time": 388,
+    "album_id": null
   },
   {
     "id": 9,
     "name": "Help!",
     "popularity": 85,
     "date": "2023-04-05",
-    "time": 192
-  },
-  {
-    "id": 10,
-    "name": "TEST",
-    "popularity": "85",
-    "date": "2024-04-05",
-    "time": "300"
+    "time": 192,
+    "album_id": null
   }
 ]
