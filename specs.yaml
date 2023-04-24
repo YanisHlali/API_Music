@@ -52,6 +52,9 @@ paths:
             description: Successful operation
           400:
             description: Genre not found
+      
+#=========================================================================#
+
     /artist:
       get:
         tags: [artist]
@@ -66,6 +69,73 @@ paths:
         responses:
           200:
             description: "Successful operation"
+    /artist/{id}:
+      get:
+        tags: [artist]
+        summary: "Get an artist by id"
+        parameters:
+          - name: id
+            schema:
+              type: integer
+            in: path
+            description: Artist's id
+            required: true
+        responses:
+          200:
+            description: Successful operation
+          400:
+            description: Artist not found
+    /artist/{name}:
+      get:
+        tags: [artist]
+        summary: "Get an artist by name"
+        parameters:
+          - name: name
+            schema:
+              type: string
+            in: path
+            description: Artist's name
+            required: true
+        responses:
+          200:
+            description: Successful operation
+          400:
+            description: Artist not found
+    /artist/{nationality}:
+      get:
+        tags: [artist]
+        summary: "Get an artist by it's nationality"
+        parameters:
+          - name: nationality
+            schema:
+              type: string
+            in: path
+            description: Artist's nationality
+            required: true
+        responses:
+          200:
+            description: Successful operation
+          400:
+            description: Artist not found
+    /artist/{popularity}:
+      get:
+        tags: [artist]
+        summary: "Get an artist by it's popularity"
+        parameters:
+          - name: popularity
+            schema:
+              type: integer
+            in: path
+            description: Artist's popularity
+            required: true
+        responses:
+          200:
+            description: Successful operation
+          400:
+            description: Artist not found
+
+#=========================================================================#
+
     /album:
       get:
         tags: [album]
@@ -80,6 +150,146 @@ paths:
         responses:
           200:
             description: "Successful operation"
+      post:
+        tags: [album]
+        summary: "Add a new album"
+        requestBody:
+          description: "Album object to be added"
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  artist:
+                    type: integer
+                    description: Artist's id
+                  date:
+                    type: string
+                    format: date
+                  genre:
+                    type: integer
+                    description: Genre id
+                example:
+                  name: "Yeezus"
+                  artist: 41
+                  date: "2021-02-17"
+                  genre: 3
+        responses:
+          201:
+            description: "Album created successfully"
+          400:
+            description: "Invalid request body"
+    /album/{id}:
+      get:
+        tags: [album]
+        summary: "Get an album by id"
+        parameters:
+          - name: id
+            schema:
+              type: integer
+            in: path
+            description: Album id
+            required: true
+        responses:
+          200:
+            description: Successful operation
+          400:
+            description: Album not found
+      put:
+        tags: [album]
+        summary: "Update an album by id"
+        parameters:
+          - name: id
+            schema:
+              type: integer
+            in: path
+            description: Album id
+            required: true
+          - name: album_data
+            in: body
+            description: JSON object containing the updated album data
+            required: true
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The new name of the album
+                artist:
+                  type: integer
+                  description: The new artist of the album
+                date:
+                  type: string
+                  format: date
+                  description: The new release date of the album
+                genre:
+                  type: integer
+                  description: The new genre of the album
+              example:
+                name: "Circles"
+                artist: 35
+                date: "2021-02-17"
+                genre: 6
+        responses:
+          200:
+            description: "Album updated successfully"
+          400:
+            description: "Invalid input, object invalid"
+          404:
+            description: "Album not found"
+      delete:
+        tags: [album]
+        summary: "Delete an album by id"
+        parameters:
+          - name: id
+            schema:
+              type: integer
+            in: path
+            description: Album id
+            required: true
+        responses:
+          204:
+            description: "Album successfully deleted"
+          400:
+            description: "Album not found"
+    /album/{name}:
+      get:
+        tags: [album]
+        summary: "Get an album by name"
+        parameters:
+          - name: name
+            schema:
+              type: string
+            in: path
+            description: Album name
+            required: true
+        responses:
+          200:
+            description: Successful operation
+          400:
+            description: Album not found
+    /album/{date}:
+      get:
+        tags: [album]
+        summary: "Get an album by date"
+        parameters:
+          - name: date
+            schema:
+              type: string
+            in: path
+            description: Album date
+            required: true
+        responses:
+          200:
+            description: Successful operation
+          400:
+            description: Album not found
+
+#=========================================================================#
+
     /track:
       get:
         tags: [track]
@@ -94,7 +304,7 @@ paths:
         responses:
           200:
             description: "Successful operation"
-    /tracks/{id}:
+    /track/{id}:
       get:
         tags: [track]
         summary: "Get a specific track by id"
@@ -104,6 +314,70 @@ paths:
               type: integer
             in: path
             description: Track id
+            required: true
+        responses:
+          200:
+            description: Successful operation
+          400:
+            description: Track not found
+    /track/{name}:
+      get:
+        tags: [track]
+        summary: "Get a track by name"
+        parameters:
+          - name: name
+            schema:
+              type: string
+            in: path
+            description: Track name
+            required: true
+        responses:
+          200:
+            description: Successful operation
+          400:
+            description: Track not found
+    /track/{date}:
+      get:
+        tags: [track]
+        summary: "Get a track by date"
+        parameters:
+          - name: date
+            schema:
+              type: string
+            in: path
+            description: Track date
+            required: true
+        responses:
+          200:
+            description: Successful operation
+          400:
+            description: Track not found
+    /track/{popularity}:
+      get:
+        tags: [track]
+        summary: "Get a track by it's popularity"
+        parameters:
+          - name: popularity
+            schema:
+              type: integer
+            in: path
+            description: Track popularity
+            required: true
+        responses:
+          200:
+            description: Successful operation
+          400:
+            description: Track not found
+    /track/{time}:
+      get:
+        tags: [track]
+        summary: "Get a track by it's time in seconds"
+        parameters:
+          - name: time
+            schema:
+              type: integer
+            in: path
+            description: Track time in seconds
             required: true
         responses:
           200:
