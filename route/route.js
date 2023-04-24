@@ -2,6 +2,7 @@ const express = require("express");
 const routeur = express.Router();
 const albumController = require("../controller/album");
 const artistController = require("../controller/artist");
+const trackController = require("../controller/track");
 
 routeur.get("/", (req, res) => {
   res.send("Hello World");
@@ -30,7 +31,8 @@ routeur
     artistController.getArtistByNationality
   )
   .post("/artist/create", artistController.createArtist)
-  .post("/artist/update", artistController.updateArtist);
+  .post("/artist/update", artistController.updateArtist)
+  .get("/artist/delete/:id", artistController.deleteArtist);
 
 // Track routes
 routeur
@@ -39,7 +41,9 @@ routeur
   .get("/track/name/:name", trackController.getTrackByName)
   .get("/track/popularity/:popularity", trackController.getTrackByPopularity)
   .get("/track/date/:date", trackController.getTrackByDate)
-  .get("/artist/create", trackController.createTrack)
-  .get("/artist/update", trackController.updateTrack);
+  .get("/track/time/:time", trackController.getTrackByTime)
+  .post("/track/create", trackController.createTrack)
+  .post("/track/update", trackController.updateTrack)
+  .get("/track/delete/:id", trackController.deleteTrack);
 
 module.exports = routeur;

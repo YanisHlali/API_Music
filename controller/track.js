@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const artistData = require("../data/artist.json");
+const trackData = require("../data/track.json");
 
 // --------------------- CREATE ---------------------
 
@@ -32,8 +32,8 @@ async function createTrack(req, res) {
 
 // --------------------- GET ---------------------
 
-async function getAllTracks(req, res) {
-  // Return all tracks
+async function getAllTrack(req, res) {
+  // get all tracks
   res.send(trackData);
 }
 
@@ -44,14 +44,14 @@ async function getTrackById(req, res) {
   res.send(track);
 }
 
-async function getTracksByName(req, res) {
+async function getTrackByName(req, res) {
   // Return a track by name
   const name = req.params.name;
   const track = trackData.find((track) => track.name === name); // Find the track with the matching name
   res.send(track);
 }
 
-async function getTracksByPopularity(req, res) {
+async function getTrackByPopularity(req, res) {
   // Return a track by popularity
   const popularity = req.params.popularity;
   const track = trackData.find(
@@ -60,10 +60,17 @@ async function getTracksByPopularity(req, res) {
   res.send(track);
 }
 
-async function getTracksByDate(req, res) {
+async function getTrackByDate(req, res) {
   // Return a track by date
   const date = req.params.date;
-  const track = trackData.find((track) => track.date === Number(date)); // Find the track with the matching date
+  const track = trackData.find((track) => track.date === date); // Find the track with the matching date
+  res.send(track);
+}
+
+async function getTrackByTime(req, res) {
+  // Return a track by time
+  const time = req.params.time;
+  const track = trackData.find((track) => track.time === time); // Find the track with the matching time
   res.send(track);
 }
 
@@ -71,18 +78,23 @@ async function getTracksByDate(req, res) {
 
 async function updateTrack(req, res) {
   // Update a track by ID
-  if (req.method === "PUT") {
+  if (req.method === "POST") {
     // Check if the HTTP method is PUT
-    const id = req.params.id;
-    const name = req.body.name;
-    const popularity = req.body.popularity;
+    const id = req.body.id;
+    const name = req.body.name ? req.body.name : null;
+    const popularity = req.body.popularity ? req.body.popularity : null;
+    const date = req.body.date ? req.body.date : null;
+    const time = req.body.time ? req.body.time : null;
+
+    console.log(id);
 
     const track = trackData.find((track) => track.id === Number(id)); // Find the track with the matching ID
-
     if (track) {
       // If the track exists
-      track.name = name ? name : track.name; // Update the track name
-      track.popularity = popularity ? popularity : track.popularity; // Update the track popularity
+      track.name = name ? name : track.name; // Update the name
+      track.popularity = popularity ? popularity : track.popularity; // Update the popularity
+      track.date = date ? date : track.date; // Update the date
+      track.time = time ? time : track.time; // Update the time
       updateTrackDataFile(); // Write the updated track data to the JSON file
       res.send(track); // Return the updated track object
     } else {
@@ -116,11 +128,12 @@ async function updateTrackDataFile() {
 
 module.exports = {
   createTrack,
-  getAllTracks,
+  getAllTrack,
   getTrackById,
-  getTracksByName,
-  getTracksByPopularity,
-  getTracksByDate,
+  getTrackByName,
+  getTrackByPopularity,
+  getTrackByDate,
+  getTrackByTime,
   updateTrack,
   deleteTrack,
 };
