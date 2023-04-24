@@ -60,7 +60,8 @@ async function getAlbumByDate(req, res) {
 
 async function getAlbumByArtistId(req, res) {
      // Return all albums by artist ID
-     const artistId = req.params.artistId;
+     console.log('Test', req.params)
+     const artistId = req.params.artist_id;
      const album = albumData.filter(
           (album) => album.artist_id === Number(artistId)
      ); // Filter the albums by the matching artist ID
@@ -69,7 +70,7 @@ async function getAlbumByArtistId(req, res) {
 
 async function getAlbumByGenreId(req, res) {
      // Return all albums by genre ID
-     const genreId = req.params.genreId;
+     const genreId = req.params.genre_id;
      const album = albumData.filter(
           (album) => album.genre_id === Number(genreId)
      ); // Filter the albums by the matching genre ID
