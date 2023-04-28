@@ -20,6 +20,27 @@ paths:
         responses:
           200:
             description: "Successful operation"
+      post:
+        tags: [genre]
+        summary: "Add a new genre"
+        requestBody:
+          description: "Genre object to be added"
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                example:
+                  name: "Rock"
+        responses:
+          201:
+            description: "Artist created successfully"
+          400:
+            description: "Invalid request body"
+
     /genre/{id}:
       get:
         tags: [genre]
@@ -36,6 +57,50 @@ paths:
             description: Successful operation
           400:
             description: Genre not found
+      put:
+        tags: [genre]
+        summary: "Update an genre by id"
+        parameters:
+          - name: id
+            schema:
+              type: integer
+            in: path
+            description: Genre id
+            required: true
+          - name: genre_data
+            in: body
+            description: JSON object containing the updated genre data
+            required: true
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The new name of the genre
+              example:
+                name: "Country"
+        responses:
+          200:
+            description: "Track updated successfully"
+          400:
+            description: "Invalid input, object invalid"
+          404:
+            description: "Track not found"
+      delete:
+        tags: [genre]
+        summary: "Delete a genre by id"
+        parameters:
+          - name: id
+            schema:
+              type: integer
+            in: path
+            description: Genre id
+            required: true
+        responses:
+          204:
+            description: "Genre successfully deleted"
+          400:
+            description: "Genre not found"
     /genre/{name}:
       get:
         tags: [genre]
@@ -69,6 +134,32 @@ paths:
         responses:
           200:
             description: "Successful operation"
+      post:
+        tags: [artist]
+        summary: "Add a new artist"
+        requestBody:
+          description: "Artist object to be added"
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  popularity:
+                    type: integer
+                  nationality:
+                    type: string
+                example:
+                  name: "Rihanna"
+                  popularity: 41
+                  nationality: "Barbadian"
+        responses:
+          201:
+            description: "Artist created successfully"
+          400:
+            description: "Invalid request body"
     /artist/{id}:
       get:
         tags: [artist]
@@ -85,6 +176,58 @@ paths:
             description: Successful operation
           400:
             description: Artist not found
+      put:
+        tags: [artist]
+        summary: "Update an artist by id"
+        parameters:
+          - name: id
+            schema:
+              type: integer
+            in: path
+            description: Artist id
+            required: true
+          - name: artist_data
+            in: body
+            description: JSON object containing the updated artist data
+            required: true
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The new name of the artist
+                popularity:
+                  type: integer
+                  description: The new popularity of the artist
+                nationality:
+                  type: string
+                  description: The new nationality of the artist
+              example:
+                name: "Patrick Bruel"
+                popularity: 35
+                nationality: "French"
+        responses:
+          200:
+            description: "Artist updated successfully"
+          400:
+            description: "Invalid input, object invalid"
+          404:
+            description: "Artist not found"
+      delete:
+        tags: [artist]
+        summary: "Delete an artist by id"
+        parameters:
+          - name: id
+            schema:
+              type: integer
+            in: path
+            description: Artist id
+            required: true
+        responses:
+          204:
+            description: "Artist successfully deleted"
+          400:
+            description: "Artist not found"
     /artist/{name}:
       get:
         tags: [artist]
@@ -304,6 +447,48 @@ paths:
         responses:
           200:
             description: "Successful operation"
+      post:
+        tags: [track]
+        summary: "Add a new track"
+        requestBody:
+          description: "Track object to be added"
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  date:
+                    type: string
+                    format: date
+                  popularity:
+                    type: integer
+                  time:
+                    type: integer
+                  genre:
+                    type: integer
+                    description: Genre id
+                  album:
+                    type: integer
+                    description: Album id
+                  artist:
+                    type: integer
+                    description: Artist's id 
+                example:
+                  name: "Karma Police"
+                  date: "1997-08-25"
+                  popularity: 15
+                  time: 262
+                  genre: 4
+                  album: 154
+                  artist: 247
+        responses:
+          201:
+            description: "Track created successfully"
+          400:
+            description: "Invalid request body"
     /track/{id}:
       get:
         tags: [track]
@@ -320,6 +505,76 @@ paths:
             description: Successful operation
           400:
             description: Track not found
+      put:
+        tags: [track]
+        summary: "Update a track by id"
+        parameters:
+          - name: id
+            schema:
+              type: integer
+            in: path
+            description: Track id
+            required: true
+          - name: track_data
+            in: body
+            description: JSON object containing the updated track data
+            required: true
+            schema:
+              type: object
+              properties:
+                  name:
+                    type: string
+                    description: The new name of the track
+                  date:
+                    type: string
+                    format: date
+                    description: The new release date of the track
+                  popularity:
+                    type: integer
+                    description: The new popularity of the track
+                  time:
+                    type: integer
+                    description: The new time of the track
+                  genre:
+                    type: integer
+                    description: The new genre of the track
+                  album:
+                    type: integer
+                    description: The new album of the track
+
+                  artist:
+                    type: integer
+                    description: The new artist of the track
+              example:
+                  name: "If I Ain't Got You"
+                  date: "2004-02-17"
+                  popularity: 42
+                  time: 187
+                  genre: 3
+                  album: 1305
+                  artist: 1018
+        responses:
+          200:
+            description: "Album updated successfully"
+          400:
+            description: "Invalid input, object invalid"
+          404:
+            description: "Album not found"
+      delete:
+        tags: [track]
+        summary: "Delete an track by id"
+        parameters:
+          - name: id
+            schema:
+              type: integer
+            in: path
+            description: Track id
+            required: true
+        responses:
+          204:
+            description: "Track successfully deleted"
+          400:
+            description: "Album not found"
     /track/{name}:
       get:
         tags: [track]
