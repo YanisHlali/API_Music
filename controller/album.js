@@ -106,6 +106,41 @@ async function updateAlbum(req, res) {
      }
 }
 
+async function addTrack(req, res) {
+     // Add a track to an album
+     if (req.method === "POST") {
+          // Check if the HTTP method is POST
+          const id = req.body.id;
+          const trackId = req.body.track_id;
+
+          const index = albumData.findIndex((album) => album.id === Number(id)); // Find the index of the album with the matching ID
+          albumData[index].track_ids.push(trackId); // Add the track ID to the album
+          updateAlbumDataFile(); // Write the updated album data to the JSON file
+          res.send(albumData[index]); // Return the updated album object
+     } else {
+          res.sendStatus(404); // Return a 404 status code
+     }
+}
+
+async function removeTrack(req, res) {
+     // Remove a track from an album
+     if (req.method === "POST") {
+          // Check if the HTTP method is POST
+          const id = req.body.id;
+          const trackId = req.body.track_id;
+
+          const index = albumData.findIndex((album) => album.id === Number(id)); // Find the index of the album with the matching ID
+          const trackIndex = albumData[index].track_ids.findIndex(
+               (track) => track === Number(trackId)
+          ); // Find the index of the track with the matching ID
+          albumData[index].track_ids.splice(trackIndex, 1); // Remove the track ID from the album
+          updateAlbumDataFile(); // Write the updated album data to the JSON file
+          res.send(albumData[index]); // Return the updated album object
+     } else {
+          res.sendStatus(404); // Return a 404 status code
+     }
+}
+
 // --------------------- DELETE ---------------------
 
 async function deleteAlbum(req, res) {
@@ -113,10 +148,26 @@ async function deleteAlbum(req, res) {
      const id = req.params.id;
      const index = albumData.findIndex((album) => album.id === Number(id)); // Find the index of the album with the matching ID
      albumData.splice(index, 1); // Remove the album from the albumData array
+     deleteAlbumIdInTrackFile(id); // Delete the album_id in tracks to the JSON file
      updateAlbumDataFile(); // Write the updated album data to the JSON file
      res.send("Album deleted"); // Return a success message
 }
 
+function deleteAlbumIdInTrackFile(id) {
+     // Delete the album_id in tracks to the JSON file
+     const trackData = require("../data/track.json");
+     // Find all tracks with the matching album_id
+     const tracks = trackData.filter((track) => track.album_id === Number(id));
+     // Delete the album_id in tracks
+     tracks.forEach((track) => {
+          track.album_id = null;
+     });
+     // Write the trackData array to the JSON file
+     fs.writeFileSync(
+          path.join(__dirname, "../data/track.json"),
+          JSON.stringify(trackData)
+     );
+}
 function updateAlbumDataFile() {
      // Write the albumData array to the JSON file
      fs.writeFileSync(
@@ -124,6 +175,8 @@ function updateAlbumDataFile() {
           JSON.stringify(albumData)
      );
 }
+
+
 
 module.exports = {
      createAlbum,
@@ -134,5 +187,7 @@ module.exports = {
      getAlbumByArtistId,
      getAlbumByGenreId,
      updateAlbum,
+     addTrack,
+     removeTrack,
      deleteAlbum,
 };
