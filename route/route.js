@@ -19,7 +19,9 @@ routeur
   .get("/album/genre/:genreId", albumController.getAlbumByGenreId)
   .post("/album/create", albumController.createAlbum)
   .post("/album/update", albumController.updateAlbum)
-  .get("/album/delete/:id", albumController.deleteAlbum);
+  .get("/album/delete/:id", albumController.deleteAlbum)
+  .post("/album/addTrack", albumController.addTrackRequest)
+  .post("/album/removeTrack", albumController.removeTrackRequest);
 
 // Artist routes
 routeur
@@ -43,7 +45,6 @@ routeur
   .post("/genre/create", genreController.createGenre)
   .post("/genre/update", genreController.updateGenre)
   .get("/genre/delete/:id", genreController.deleteGenre);
-  
 
 // Track routes
 routeur
@@ -55,6 +56,7 @@ routeur
   .get("/track/time/:time", trackController.getTrackByTime)
   .post("/track/create", trackController.createTrack)
   .post("/track/update", trackController.updateTrack)
-  .get("/track/delete/:id", trackController.deleteTrack);
+  .get("/track/delete/:id", trackController.deleteTrack)
+  .get("/track/updateAlbum/:id", trackController.updateAlbumId);
 
 module.exports = routeur;

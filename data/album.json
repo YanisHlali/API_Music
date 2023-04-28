@@ -1,19 +1,11 @@
 [
   {
-    "id": 5,
-    "name": "Sgt. Pepper's Lonely Hearts Club Band",
-    "date": "1967-06-01",
-    "artist_id": 1,
-    "genre_id": 5,
-    "track_ids": []
-  },
-  {
     "id": 6,
     "name": "Help!",
     "date": "1965-08-06",
     "artist_id": 2,
     "genre_id": 6,
-    "track_ids": []
+    "track_ids": [2]
   },
   {
     "id": 7,
