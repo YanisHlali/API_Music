@@ -153,6 +153,10 @@ function deleteTrackIdInAlbumFile(id) {
       album.track_ids.splice(index, 1);
     }
   })
+
+  // Write the updated album data to the JSON file
+  const filePath = path.join(__dirname, "../data/album.json");
+  fs.writeFileSync(filePath, JSON.stringify(albumData, null, 2));
 }
 
 function updateTrackDataFile() {
