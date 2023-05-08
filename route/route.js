@@ -57,6 +57,6 @@ routeur
   .post("/track/create", trackController.createTrack)
   .post("/track/update", trackController.updateTrack)
   .get("/track/delete/:id", trackController.deleteTrack)
-  .get("/track/updateAlbum/:id", trackController.updateAlbumId);
+  .post("/track/updateAlbum/:id", trackController.updateAlbumId);
 
 module.exports = routeur;

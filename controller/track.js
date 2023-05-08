@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const trackData = require("../data/track.json");
 const albumData = require("../data/album.json");
+const albumController = require("./album");
 
 // --------------------- CREATE ---------------------
 
@@ -90,8 +91,6 @@ async function updateTrack(req, res) {
     const time = req.body.time ? req.body.time : null;
     const albumId = req.body.album_id ? req.body.album_id : null;
 
-    console.log(id);
-
     const track = trackData.find((track) => track.id === Number(id)); // Find the track with the matching ID
     if (track) {
       // If the track exists
@@ -112,20 +111,26 @@ async function updateAlbumId(req, res) {
   // Set the album ID of a track
   if (req.method === "POST") {
     // Check if the HTTP method is PUT
-    const id = req.body.id;
-    const albumId = req.body.album_id;
+    const id = Number(req.params.id);
+    const albumId = Number(req.body.album_id);
 
     const track = trackData.find((track) => track.id === Number(id)); // Find the track with the matching ID
-    const oldAlbumId = albumData.find((album) => album.id === track.album_id); // Find the album with the matching ID
-    if (oldAlbumId !== albumId) {
-      albumData.removeTrack(track.album_id, id); // Remove the track ID from the old album
+    console.log(track);
+
+    const newAlbum = albumData.find((album) => album.id === albumId); // Find the new album with the matching ID
+    const oldAlbum = albumData.find((album) => album.id === track.album_id); // Find the old album with the matching ID
+
+    // If old album is not null and different from the new album
+    if (oldAlbum && oldAlbum.id !== albumId) {
+      albumController.removeTrack(track.album_id, id); // Remove the track ID from the old album
     }
-    if (track) {
-      // If the track exists
-      track.album_id = albumId ? albumId : null; // Update the album ID of the track null if no album ID is provided
+
+    if (track && newAlbum) {
+      // If the track and new album exist
+      track.album_id = albumId; // Update the album ID of the track
       updateTrackDataFile(); // Write the updated track data to the JSON file
 
-      albumData.addTrack(albumId, id); // Add the track ID to the album
+      albumController.addTrack(albumId, id); // Add the track ID to the album
 
       res.send(track); // Return the updated track object
     } else {
