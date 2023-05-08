@@ -89,14 +89,38 @@ async function updateAlbum(req, res) {
     const date = req.body.date;
     const artistId = req.body.artist_id;
     const genreId = req.body.genre_id;
-    const trackIds = req.body.track_ids;
+    const trackIds = req.body.track_ids
+      .split(",")
+      .map((trackId) => Number(trackId));
+
+    // Check if track_ids exists
+    if (trackIds) {
+      for (let i = 0; i < trackIds.length; i++) {
+        let track = trackData.find((track) => track.id === trackIds[i]);
+        if (!track) {
+          // If the track doesn't exist, delete the track ID from the track_ids array
+          trackIds.splice(i, 1);
+        }
+      }
+    }
 
     const index = albumData.findIndex((album) => album.id === Number(id)); // Find the index of the album with the matching ID
-    albumData[index].name = name;
-    albumData[index].date = date;
-    albumData[index].artist_id = artistId;
-    albumData[index].genre_id = genreId;
-    albumData[index].track_ids = trackIds;
+
+    if (name) {
+      albumData[index].name = name;
+    }
+    if (date) {
+      albumData[index].date = date;
+    }
+    if (artistId) {
+      albumData[index].artist_id = artistId;
+    }
+    if (genreId) {
+      albumData[index].genre_id = genreId;
+    }
+    if (trackIds) {
+      albumData[index].track_ids = trackIds;
+    }
 
     updateAlbumDataFile(); // Write the updated album data to the JSON file
     res.send(albumData[index]); // Return the updated album object
