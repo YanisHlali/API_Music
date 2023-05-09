@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const artistData = require("../data/artist.json");
 const albumData = require("../data/album.json");
+const trackData = require("../data/track.json");
 
 // --------------------- CREATE ---------------------
 
@@ -102,17 +103,18 @@ async function deleteArtist(req, res) {
 
   const allAlbums = albumData.filter((album) => album.artist_id === Number(id)); // Find all albums with the matching artist ID
   allAlbums.forEach((album) => {
-    // Remove the tracks from the trackData array
-    album.track_ids.forEach((trackId) => {
-      const trackIndex = trackData.findIndex((track) => track.id === trackId);
-      if (trackIndex !== -1) {
-        trackData.splice(trackIndex, 1);
-      }
-    });
-
     // Remove the albums from the albumData array
     const index = albumData.findIndex((a) => a.id === album.id); // Find the index of the album in the albumData array
     albumData.splice(index, 1); // Remove the album from the albumData array
+  });
+
+  // Remove all tracks by the artist from the trackData array
+  const tracksByArtist = trackData.filter(
+    (track) => track.artist_id === Number(id)
+  );
+  tracksByArtist.forEach((track) => {
+    const trackIndex = trackData.findIndex((t) => t.id === track.id);
+    trackData.splice(trackIndex, 1);
   });
 
   const index = artistData.findIndex((artist) => artist.id === Number(id)); // Find the index of the artist in the artistData array
