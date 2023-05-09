@@ -212,10 +212,26 @@ async function removeTrackRequest(req, res) {
 async function deleteAlbum(req, res) {
   // Delete an album by ID
   const id = req.params.id;
+
+  // get album
+  const album = albumData.find((album) => album.id === Number(id));
+  const trackIds = album.track_ids;
+
+  // Remove all track of trackIds
+  trackIds.forEach((trackId) => {
+    const track = trackData.find((track) => track.id === Number(trackId));
+    // Remove track from trackData array
+    const index = trackData.indexOf(track);
+    trackData.splice(index, 1);
+  });
+
+  // Remove album
   const index = albumData.findIndex((album) => album.id === Number(id)); // Find the index of the album with the matching ID
   albumData.splice(index, 1); // Remove the album from the albumData array
-  deleteAlbumIdInTrackFile(id); // Delete the album_id in tracks to the JSON file
+
   updateAlbumDataFile(); // Write the updated album data to the JSON file
+  updateTrackDataFile(); // Write the updated track data to the JSON file
+
   res.send("Album deleted"); // Return a success message
 }
 
@@ -234,11 +250,20 @@ function deleteAlbumIdInTrackFile(id) {
     JSON.stringify(trackData)
   );
 }
+
 function updateAlbumDataFile() {
   // Write the albumData array to the JSON file
   fs.writeFileSync(
     path.join(__dirname, "../data/album.json"),
     JSON.stringify(albumData)
+  );
+}
+
+function updateTrackDataFile() {
+  // Write the trackData array to the JSON file
+  fs.writeFileSync(
+    path.join(__dirname, "../data/track.json"),
+    JSON.stringify(trackData)
   );
 }
 
