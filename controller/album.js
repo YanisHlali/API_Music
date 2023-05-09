@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const albumData = require("../data/album.json");
 const trackData = require("../data/track.json");
+const genreData = require("../data/genre.json");
 
 // --------------------- CREATE ---------------------
 
@@ -14,7 +15,30 @@ async function createAlbum(req, res) {
     const date = req.body.date;
     const artistId = req.body.artist_id;
     const genreId = req.body.genre_id;
-    const trackIds = req.body.track_ids;
+    const trackIds = req.body.track_ids
+      .split(",")
+      .map((trackId) => Number(trackId));
+
+    if (!genreId || !trackIds) {
+      return res.status(400).send({ message: "Genre or tracks doesn't exist" });
+    }
+
+    // check if genre_id exists
+    if (genreId) {
+      const genre = genreData.find((genre) => genre.id === Number(genreId));
+      if (!genre) {
+        return res.status(400).send({ message: "Genre not found" });
+      }
+    }
+
+    if (trackIds) {
+      for (let i = 0; i < trackIds.length; i++) {
+        let track = trackData.find((track) => track.id === trackIds[i]);
+        if (!track) {
+          return res.status(400).send({ message: "Tracks not found" });
+        }
+      }
+    }
 
     const idDefault = albumData.length + 1; // Generate a new ID
     const newAlbum = {
@@ -27,7 +51,7 @@ async function createAlbum(req, res) {
     };
     albumData.push(newAlbum); // Add the new album to the albumData array
     updateAlbumDataFile(); // Write the updated album data to the JSON file
-    res.send(newAlbum); // Return the new album object
+    return res.send(newAlbum); // Return the new album object
   } else {
     res.sendStatus(404); // Return a 404 status code
   }
