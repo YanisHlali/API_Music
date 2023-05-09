@@ -20,8 +20,8 @@ routeur
   .post("/album/create", albumController.createAlbum)
   .post("/album/update", albumController.updateAlbum)
   .get("/album/delete/:id", albumController.deleteAlbum)
-  .post("/album/addTrack", albumController.addTrackRequest)
-  .post("/album/removeTrack", albumController.removeTrackRequest);
+  .post("/album/addTrack", albumController.addTrack)
+  .post("/album/removeTrack", albumController.removeTrack);
 
 // Artist routes
 routeur

@@ -430,6 +430,181 @@ paths:
             description: Successful operation
           400:
             description: Album not found
+    /album/artist/{artistId}:
+      get:
+        tags: [album]
+        summary: "List all albums by artist ID"
+        parameters:
+          - name: artistId
+            in: path
+            required: true
+            description: "ID of the artist to return albums for"
+            schema:
+              type: integer
+        responses:
+          200:
+            description: "Successful operation"
+          404:
+            description: "Artist not found"
+    /album/genre/{genreId}:
+      get:
+        tags: [album]
+        summary: "List all albums by genre ID"
+        parameters:
+          - name: genreId
+            in: path
+            required: true
+            description: "ID of the genre to return albums for"
+            schema:
+              type: integer
+        responses:
+          200:
+            description: "Successful operation"
+          404:
+            description: "Genre not found"
+    /album/create:
+      post:
+        tags: [album]
+        summary: "Create a new album"
+        requestBody:
+          description: "Album object to be added"
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  date:
+                    type: string
+                    format: date
+                  artist_id:
+                    type: integer
+                    description: "Artist's id"
+                  genre_id:
+                    type: integer
+                    description: "Genre id"
+                  track_ids:
+                    type: string
+                    description: "Comma-separated track ids"
+        responses:
+          200:
+            description: "Album created successfully"
+          400:
+            description: "Invalid request body"
+          404:
+            description: "Not found"
+    /album/update:
+      post:
+        tags: [album]
+        summary: "Update an existing album by ID"
+        requestBody:
+          description: "Album object to be updated"
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: "Id of the album to be updated"
+                  name:
+                    type: string
+                    description: "Updated name of the album"
+                  date:
+                    type: string
+                    format: date
+                    description: "Updated date of the album"
+                  artist_id:
+                    type: integer
+                    description: "Updated artist's id"
+                  genre_id:
+                    type: integer
+                    description: "Updated genre id"
+                  track_ids:
+                    type: string
+                    description: "Comma-separated updated track ids"
+        responses:
+          200:
+            description: "Album updated successfully"
+          400:
+            description: "Invalid request body"
+          404:
+            description: "Not found"
+    /album/delete/{id}:
+      get:
+        tags: [album]
+        summary: "Delete an album by ID"
+        parameters:
+          - name: id
+            in: path
+            description: "ID of the album to delete"
+            required: true
+            schema:
+              type: integer
+        responses:
+          200:
+            description: "Album deleted successfully"
+          404:
+            description: "Album not found"
+    /album/addTrack:
+      post:
+        tags: [album]
+        summary: "Add a track to an album"
+        requestBody:
+          description: "ID of the album and track to add"
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: "Album's id"
+                  track_id:
+                    type: integer
+                    description: "Track's id"
+        responses:
+          200:
+            description: "Track added to album successfully"
+          404:
+            description: "Invalid request"
+    /album/removeTrack:
+      post:
+        tags: [album]
+        summary: "Remove a track from an album"
+        requestBody:
+          description: "Album and track IDs for removing the track from the album"
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: "ID of the album from which to remove the track"
+                  track_id:
+                    type: integer
+                    description: "ID of the track to be removed from the album"
+        responses:
+          200:
+            description: "Track removed successfully from the album"
+          404:
+            description: "Album or track not found"
+
+
+
+
+
+
+
+    
 
 #=========================================================================#
 
