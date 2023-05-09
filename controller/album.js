@@ -16,8 +16,8 @@ async function createAlbum(req, res) {
     const artistId = req.body.artist_id;
     const genreId = req.body.genre_id;
     const trackIds = req.body.track_ids
-      .split(",")
-      .map((trackId) => Number(trackId));
+      ? req.body.track_ids.split(",").map((trackId) => Number(trackId))
+      : null;
 
     if (!genreId || !trackIds) {
       return res.status(400).send({ message: "Genre or tracks doesn't exist" });
@@ -45,8 +45,8 @@ async function createAlbum(req, res) {
       id: id ? Number(id) : idDefault,
       name,
       date,
-      artist_id: artistId,
-      genre_id: genreId,
+      artist_id: Number(artistId),
+      genre_id: Number(genreId),
       track_ids: trackIds,
     };
     albumData.push(newAlbum); // Add the new album to the albumData array

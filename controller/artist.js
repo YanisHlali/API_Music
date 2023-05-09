@@ -95,19 +95,17 @@ async function deleteArtist(req, res) {
   // Delete an artist
   const id = req.params.id;
   const artist = artistData.find((artist) => artist.id === Number(id)); // Find the artist with the matching ID
-  const allAlbumsOfArtist = artistData.splice(artistData.indexOf(artist), 1);
-  // Remove all albums of the artist
-  allAlbumsOfArtist.forEach((album) => {
-    const index = albumData.findIndex(
-      (album) => album.artist_id === Number(id)
-    ); // Find the index of the album in the albumData array
+  const allAlbums = albumData.filter((album) => album.artist_id === Number(id)); // Find all albums with the matching artist ID
+  allAlbums.forEach((album) => {
+    // Remove the albums from the albumData array
+    const index = albumData.findIndex((album) => album.id === Number(id)); // Find the index of the album in the albumData array
     albumData.splice(index, 1); // Remove the album from the albumData array
-    fs.writeFileSync(
-      path.join(__dirname, "../data/album.json"),
-      JSON.stringify(albumData, null, 2)
-    ); // Write the updated album data to the JSON file
   });
+  const index = artistData.findIndex((artist) => artist.id === Number(id)); // Find the index of the artist in the artistData array
+  artistData.splice(index, 1); // Remove the artist from the artistData array
+
   updateArtistDataFile(); // Write the updated artist data to the JSON file
+  updateAlbumDataFile(); // Write the updated album data to the JSON file
   res.send("Artist deleted"); // Return the deleted artist object
 }
 
@@ -115,6 +113,14 @@ async function updateArtistDataFile() {
   // Write the updated artist data to the JSON file
   const data = JSON.stringify(artistData, null, 2); // Convert the artistData array to a string
   fs.writeFileSync(path.join(__dirname, "../data/artist.json"), data); // Write the string to the JSON file
+}
+
+async function updateAlbumDataFile() {
+  // Write the albumData array to the JSON file
+  fs.writeFileSync(
+    path.join(__dirname, "../data/album.json"),
+    JSON.stringify(albumData)
+  );
 }
 
 module.exports = {
