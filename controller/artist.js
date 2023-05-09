@@ -95,17 +95,32 @@ async function deleteArtist(req, res) {
   // Delete an artist
   const id = req.params.id;
   const artist = artistData.find((artist) => artist.id === Number(id)); // Find the artist with the matching ID
+
+  if (!artist) {
+    return res.status(404).send({ message: "Artist not found" });
+  }
+
   const allAlbums = albumData.filter((album) => album.artist_id === Number(id)); // Find all albums with the matching artist ID
   allAlbums.forEach((album) => {
+    // Remove the tracks from the trackData array
+    album.track_ids.forEach((trackId) => {
+      const trackIndex = trackData.findIndex((track) => track.id === trackId);
+      if (trackIndex !== -1) {
+        trackData.splice(trackIndex, 1);
+      }
+    });
+
     // Remove the albums from the albumData array
-    const index = albumData.findIndex((album) => album.id === Number(id)); // Find the index of the album in the albumData array
+    const index = albumData.findIndex((a) => a.id === album.id); // Find the index of the album in the albumData array
     albumData.splice(index, 1); // Remove the album from the albumData array
   });
+
   const index = artistData.findIndex((artist) => artist.id === Number(id)); // Find the index of the artist in the artistData array
   artistData.splice(index, 1); // Remove the artist from the artistData array
 
   updateArtistDataFile(); // Write the updated artist data to the JSON file
   updateAlbumDataFile(); // Write the updated album data to the JSON file
+  updateTrackDataFile(); // Write the updated track data to the JSON file
   res.send("Artist deleted"); // Return the deleted artist object
 }
 
@@ -121,6 +136,12 @@ async function updateAlbumDataFile() {
     path.join(__dirname, "../data/album.json"),
     JSON.stringify(albumData)
   );
+}
+
+async function updateTrackDataFile() {
+  // Write the updated track data to the JSON file
+  const data = JSON.stringify(trackData, null, 2); // Convert the trackData array to a string
+  fs.writeFileSync(path.join(__dirname, "../data/track.json"), data); // Write the string to the JSON file
 }
 
 module.exports = {
