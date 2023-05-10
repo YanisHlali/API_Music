@@ -3,6 +3,8 @@ const path = require("path");
 const artistData = require("../data/artist.json");
 const albumData = require("../data/album.json");
 const trackData = require("../data/track.json");
+const albumController = require("./album");
+const trackController = require("./track");
 
 // --------------------- CREATE ---------------------
 
@@ -121,8 +123,8 @@ async function deleteArtist(req, res) {
   artistData.splice(index, 1); // Remove the artist from the artistData array
 
   updateArtistDataFile(); // Write the updated artist data to the JSON file
-  updateAlbumDataFile(); // Write the updated album data to the JSON file
-  updateTrackDataFile(); // Write the updated track data to the JSON file
+  albumController.updateAlbumDataFile(); // Write the updated album data to the JSON file
+  trackController.updateTrackDataFile(); // Write the updated track data to the JSON file
   res.send("Artist deleted"); // Return the deleted artist object
 }
 
@@ -130,20 +132,6 @@ async function updateArtistDataFile() {
   // Write the updated artist data to the JSON file
   const data = JSON.stringify(artistData, null, 2); // Convert the artistData array to a string
   fs.writeFileSync(path.join(__dirname, "../data/artist.json"), data); // Write the string to the JSON file
-}
-
-async function updateAlbumDataFile() {
-  // Write the albumData array to the JSON file
-  fs.writeFileSync(
-    path.join(__dirname, "../data/album.json"),
-    JSON.stringify(albumData)
-  );
-}
-
-async function updateTrackDataFile() {
-  // Write the updated track data to the JSON file
-  const data = JSON.stringify(trackData, null, 2); // Convert the trackData array to a string
-  fs.writeFileSync(path.join(__dirname, "../data/track.json"), data); // Write the string to the JSON file
 }
 
 module.exports = {

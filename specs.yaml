@@ -40,7 +40,6 @@ paths:
             description: "Artist created successfully"
           400:
             description: "Invalid request body"
-
     /genre/{id}:
       get:
         tags: [genre]
@@ -117,9 +116,68 @@ paths:
             description: Successful operation
           400:
             description: Genre not found
-      
-#=========================================================================#
-
+    /genre/create:
+      post:
+        tags: [genre]
+        summary: "Create a new genre"
+        requestBody:
+          description: "Genre object to be added"
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+        responses:
+          201:
+            description: "Genre created successfully"
+          400:
+            description: "Invalid request body"
+          404:
+            description: "Invalid method"
+    /genre/update:
+      put:
+        tags: [genre]
+        summary: "Update an existing genre"
+        requestBody:
+          description: "Genre object to be updated"
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+        responses:
+          200:
+            description: "Genre updated successfully"
+          400:
+            description: "Invalid request body"
+          404:
+            description: "Invalid method"
+    /genre/delete/{id}:
+      get:
+        tags: [genre]
+        summary: "Delete a genre by ID"
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+            description: "ID of genre to delete"
+        responses:
+          200:
+            description: "Genre deleted successfully"
+          404:
+            description: "Genre not found"
     /artist:
       get:
         tags: [artist]
@@ -276,9 +334,124 @@ paths:
             description: Successful operation
           400:
             description: Artist not found
-
-#=========================================================================#
-
+    /artist/nationality/{nationality}:
+      get:
+        tags: [artist]
+        summary: "Get an artist by nationality"
+        parameters:
+          - in: path
+            name: nationality
+            schema:
+              type: string
+            required: true
+            description: "Nationality of the artist to retrieve"
+        responses:
+          200:
+            description: "Artist data retrieved successfully"
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Artist"
+          404:
+            description: "Artist not found"
+    /artist/create:
+      post:
+        tags: [artist]
+        summary: "Create a new artist"
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: "The ID of the artist"
+                  name:
+                    type: string
+                    description: "The name of the artist"
+                  popularity:
+                    type: integer
+                    description: "The popularity score of the artist"
+                  nationality:
+                    type: string
+                    description: "The nationality of the artist"
+        responses:
+          200:
+            description: "Artist created successfully"
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Artist"
+          400:
+            description: "Invalid input"
+          404:
+            description: "Artist not found"
+    /artist/update:
+      put:
+        tags: [artist]
+        summary: "Update an existing artist"
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: "The ID of the artist"
+                  name:
+                    type: string
+                    description: "The updated name of the artist"
+                  popularity:
+                    type: integer
+                    description: "The updated popularity score of the artist"
+                  nationality:
+                    type: string
+                    description: "The updated nationality of the artist"
+        responses:
+          200:
+            description: "Artist updated successfully"
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Artist"
+          400:
+            description: "Invalid input"
+          404:
+            description: "Artist not found"
+    /artist/delete/{id}:
+      get:
+        tags: [artist]
+        summary: "Delete an existing artist and associated albums and tracks"
+        parameters:
+          - name: id
+            in: path
+            required: true
+            schema:
+              type: integer
+            description: "The ID of the artist to delete"
+        responses:
+          200:
+            description: "Artist and associated albums and tracks deleted successfully"
+            content:
+              text/plain:
+                schema:
+                  type: string
+                  example: "Artist deleted"
+          404:
+            description: "Artist not found"
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      description: "Error message"
+                      example: "Artist not found"
     /album:
       get:
         tags: [album]
@@ -597,17 +770,6 @@ paths:
             description: "Track removed successfully from the album"
           404:
             description: "Album or track not found"
-
-
-
-
-
-
-
-    
-
-#=========================================================================#
-
     /track:
       get:
         tags: [track]
@@ -814,3 +976,212 @@ paths:
             description: Successful operation
           400:
             description: Track not found
+    /track/create:
+      post:
+        tags: [track]
+        summary: "Create a new track"
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: "The ID of the track (optional)"
+                  name:
+                    type: string
+                    description: "The name of the track"
+                  popularity:
+                    type: integer
+                    description: "The popularity of the track"
+                  date:
+                    type: string
+                    format: date
+                    description: "The date of the track"
+                  time:
+                    type: string
+                    description: "The duration of the track"
+                  album_id:
+                    type: integer
+                    description: "The ID of the album the track belongs to"
+        responses:
+          200:
+            description: "Track created successfully"
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: "The ID of the track"
+                    name:
+                      type: string
+                      description: "The name of the track"
+                    popularity:
+                      type: integer
+                      description: "The popularity of the track"
+                    date:
+                      type: string
+                      format: date
+                      description: "The date of the track"
+                    time:
+                      type: string
+                      description: "The duration of the track"
+                    album_id:
+                      type: integer
+                      description: "The ID of the album the track belongs to"
+          404:
+            description: "Invalid request method"
+    /track/update:
+      post:
+        tags: [track]
+        summary: "Update a track by ID"
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: "The ID of the track"
+                  name:
+                    type: string
+                    description: "The updated name of the track (optional)"
+                  popularity:
+                    type: integer
+                    description: "The updated popularity of the track (optional)"
+                  date:
+                    type: string
+                    format: date
+                    description: "The updated date of the track (optional)"
+                  time:
+                    type: string
+                    description: "The updated duration of the track (optional)"
+                  album_id:
+                    type: integer
+                    description: "The updated ID of the album the track belongs to (optional)"
+        responses:
+          200:
+            description: "Track updated successfully"
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: "The ID of the track"
+                    name:
+                      type: string
+                      description: "The name of the track"
+                    popularity:
+                      type: integer
+                      description: "The popularity of the track"
+                    date:
+                      type: string
+                      format: date
+                      description: "The date of the track"
+                    time:
+                      type: string
+                      description: "The duration of the track"
+                    album_id:
+                      type: integer
+                      description: "The ID of the album the track belongs to"
+          404:
+            description: "Track not found or invalid request method"
+    /track/delete/{id}:
+      get:
+        tags: [track]
+        summary: "Delete a track by ID"
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+            description: "The ID of the track"
+        responses:
+          200:
+            description: "Track deleted successfully"
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: "The ID of the track"
+                    name:
+                      type: string
+                      description: "The name of the track"
+                    popularity:
+                      type: integer
+                      description: "The popularity of the track"
+                    date:
+                      type: string
+                      format: date
+                      description: "The date of the track"
+                    time:
+                      type: string
+                      description: "The duration of the track"
+                    album_id:
+                      type: integer
+                      description: "The ID of the album the track belongs to"
+          404:
+            description: "Track not found"
+    /track/updateAlbum/{id}:
+      post:
+        tags: [track]
+        summary: "Set the album ID of a track"
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+            description: "The ID of the track"
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  album_id:
+                    type: integer
+                    description: "The ID of the new album"
+        responses:
+          200:
+            description: "Track updated successfully"
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: "The ID of the track"
+                    name:
+                      type: string
+                      description: "The name of the track"
+                    popularity:
+                      type: integer
+                      description: "The popularity of the track"
+                    date:
+                      type: string
+                      format: date
+                      description: "The date of the track"
+                    time:
+                      type: string
+                      description: "The duration of the track"
+                    album_id:
+                      type: integer
+                      description: "The ID of the album the track belongs to"
+          404:
+            description: "Track or album not found"
+

@@ -226,22 +226,6 @@ async function deleteAlbum(req, res) {
   res.send("Album deleted"); // Return a success message
 }
 
-function deleteAlbumIdInTrackFile(id) {
-  // Delete the album_id in tracks to the JSON file
-  const trackData = require("../data/track.json");
-  // Find all tracks with the matching album_id
-  const tracks = trackData.filter((track) => track.album_id === Number(id));
-  // Delete the album_id in tracks
-  tracks.forEach((track) => {
-    track.album_id = null;
-  });
-  // Write the trackData array to the JSON file
-  fs.writeFileSync(
-    path.join(__dirname, "../data/track.json"),
-    JSON.stringify(trackData)
-  );
-}
-
 function updateAlbumDataFile() {
   // Write the albumData array to the JSON file
   fs.writeFileSync(
@@ -269,5 +253,6 @@ module.exports = {
   getAlbumByArtistId,
   getAlbumByGenreId,
   updateAlbum,
+  updateAlbumDataFile,
   deleteAlbum,
 };
